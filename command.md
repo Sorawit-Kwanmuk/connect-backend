@@ -1,0 +1,2 @@
+- `npx create-react-app connect-backend`
+- `npm i axios`
