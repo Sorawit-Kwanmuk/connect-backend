@@ -7,7 +7,8 @@ function App() {
   // console.log(localStorage.getItem('user'));
   // localStorage.removeItem('message');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmitLogin = async e => {
     try {
@@ -16,8 +17,12 @@ function App() {
         username: username,
         password: password,
       });
-      console.log(res.data);
+      console.log(res);
+      localStorage.setItem('token', res.data.token);
     } catch (error) {
+      if (error.response && error.status === 400) {
+        setError('Invalid Username or Password');
+      }
       console.dir(error); //dir = directory
     }
   };
@@ -41,6 +46,7 @@ function App() {
         />
         <button>Login</button>
       </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }
